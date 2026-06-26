@@ -63,6 +63,11 @@ const submitLogin = async ({ email, password, mfaCode }) => {
   return { response, result };
 };
 
+const loginReason = new URLSearchParams(window.location.search).get('reason');
+if (loginReason === 'idle') {
+  setError('Your session expired due to inactivity. Please sign in again.');
+}
+
 if (storedToken) {
   window.location.href = 'tickets.html';
 }
