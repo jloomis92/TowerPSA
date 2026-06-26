@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <script src="index.js" defer></script>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">PSA for modern MSPs</span>
+          <h1>Run service, ticketing, and billing from one secure web portal.</h1>
+          <p>Built as a starting foundation for a PSA platform with clean UX, role-based access, and modular features that scale with your team.</p>
+          <div class="hero-actions">
+            <a href="#features" class="button primary">Explore features</a>
+            <a href="#contact" class="button secondary">Get started</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <span class="card-label">Live preview</span>
+          <h2>Core API endpoints</h2>
+          <ul class="stat-list">
+            <li><strong>POST /api/auth/login</strong> — user login and JWT generation</li>
+            <li><strong>GET /api/tickets</strong> — protected ticket list</li>
+            <li><strong>GET /health</strong> — service health check</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section id="features" class="feature-grid">
+        <article class="feature-card">
+          <h3>Service desk</h3>
+          <p>Create and track tickets with status, priority, and customer assignment.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Customer management</h3>
+          <p>Organize accounts, locations, and assets for every client in one place.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Security first</h3>
+          <p>JWT-based auth, helmet headers, and configurable CORS to protect your API.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <p>Built as a PSA starter template. Next up: login UI, ticket management, and account dashboards.</p>
+    </footer>
+  </div>
+</body>
+</html>

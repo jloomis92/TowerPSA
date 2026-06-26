@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticket · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <a href="calendar.html" class="button primary">Calendar</a>
+        <a href="companies.html" class="button primary">Companies</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="ticket-detail-back">
+        <a href="tickets.html" class="back-link">← Back to Dashboard</a>
+      </div>
+
+      <div id="ticket-detail-shell" hidden>
+
+        <!-- Ticket Header -->
+        <div class="ticket-detail-header">
+          <div class="ticket-detail-title-row">
+            <span class="ticket-detail-number" id="detail-number"></span>
+            <h1 class="ticket-detail-title" id="detail-title"></h1>
+            <button type="button" id="edit-ticket-button" class="button-icon" aria-label="Edit ticket">✎</button>
+          </div>
+          <div class="ticket-detail-badges">
+            <span id="detail-status-badge"></span>
+            <span id="detail-priority-badge"></span>
+          </div>
+        </div>
+
+        <!-- Two-column layout -->
+        <div class="ticket-detail-layout">
+
+          <!-- Left: main content -->
+          <div class="ticket-detail-main">
+
+            <!-- Description -->
+            <div class="ticket-detail-card">
+              <h2>Description</h2>
+              <p id="detail-description" class="ticket-description"></p>
+            </div>
+
+            <!-- Time Entries -->
+            <div class="ticket-detail-card">
+              <div class="ticket-detail-card-header">
+                <h2>Time Entries</h2>
+                <div class="ticket-detail-card-header-meta">
+                  <span class="time-total">Total: <strong id="detail-total-hours">0h</strong></span>
+                  <button type="button" id="view-ticket-history-button" class="button secondary">History</button>
+                  <button type="button" id="add-time-button" class="button primary">Log Time</button>
+                </div>
+              </div>
+              <div class="detail-tabs-header time-entry-tabs" aria-label="Time entry filters">
+                <button type="button" class="detail-tab-button active" data-time-filter="all">All</button>
+                <button type="button" class="detail-tab-button" data-time-filter="customer">Customer Notes</button>
+                <button type="button" class="detail-tab-button" data-time-filter="internal">Internal Notes</button>
+              </div>
+              <div id="time-entries-container">
+                <table class="ticket-table time-entries-table" aria-label="Time entries">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>User</th>
+                      <th>Hours</th>
+                      <th>Billable</th>
+                      <th>Note Type</th>
+                      <th>Notes</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="time-entries-body">
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="ticket-attachments-section">
+                <div class="ticket-detail-card-header">
+                  <h2>Attachments</h2>
+                </div>
+                <form id="ticket-attachment-form" class="ticket-attachment-form" novalidate>
+                  <div class="form-field">
+                    <label for="ticket-attachments-input">Add Attachment</label>
+                    <input id="ticket-attachments-input" name="attachments" type="file" multiple />
+                  </div>
+                  <div class="ticket-note-actions">
+                    <div id="ticket-attachment-error" class="form-error"></div>
+                    <button type="submit" class="button primary">Upload Attachment</button>
+                  </div>
+                </form>
+                <div id="ticket-attachments-list" class="ticket-attachments-list"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: sidebar -->
+          <aside class="ticket-detail-sidebar">
+            <div class="ticket-detail-card">
+              <h2>Details</h2>
+              <dl class="ticket-meta-list">
+                <div class="ticket-meta-item">
+                  <dt>Customer</dt>
+                  <dd id="detail-customer"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Assigned To</dt>
+                  <dd id="detail-assigned"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Status</dt>
+                  <dd>
+                    <select id="detail-status-select" class="inline-select">
+                      <option value="Open">Open</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Closed">Closed</option>
+                    </select>
+                  </dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Priority</dt>
+                  <dd>
+                    <select id="detail-priority-select" class="inline-select">
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                      <option value="Critical">Critical</option>
+                    </select>
+                  </dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>SLA Policy</dt>
+                  <dd id="detail-sla-policy"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>SLA State</dt>
+                  <dd id="detail-sla-state"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Response Due</dt>
+                  <dd id="detail-sla-response-due"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Resolution Due</dt>
+                  <dd id="detail-sla-resolution-due"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Created</dt>
+                  <dd id="detail-created"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Last Updated</dt>
+                  <dd id="detail-updated"></dd>
+                </div>
+              </dl>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+
+      <div id="ticket-load-error" class="form-error" hidden></div>
+
+      <!-- Log Time Modal -->
+      <div id="log-time-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Log Time</h2>
+            <button type="button" id="close-log-time-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="log-time-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="time-date">Date</label>
+              <input id="time-date" name="date" type="date" required />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="time-start">Start Time</label>
+                <input id="time-start" name="startTime" type="text" autocomplete="off" />
+              </div>
+              <div class="form-field">
+                <label for="time-end">End Time</label>
+                <input id="time-end" name="endTime" type="text" autocomplete="off" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="time-duration">Duration</label>
+              <div class="duration-display" id="time-duration" aria-live="polite">0.0h</div>
+            </div>
+            <input type="hidden" name="hours" id="time-hours" />
+            <div class="form-field">
+              <label>Billable</label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input id="billableYes" type="radio" name="billable" value="yes" required checked />
+                  <label for="billableYes">Billable</label>
+                </div>
+                <div class="form-radio">
+                  <input id="billableNo" type="radio" name="billable" value="no" required />
+                  <label for="billableNo">Non-billable</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="time-note-visibility">Note Type</label>
+              <select id="time-note-visibility" name="noteVisibility">
+                <option value="internal">Internal Note</option>
+                <option value="customer" selected>Customer Note</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="time-notes">Notes</label>
+              <textarea id="time-notes" name="notes" rows="3" placeholder="What did you work on?"></textarea>
+            </div>
+            <div id="log-time-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Save Time Entry</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit Time Entry Modal -->
+      <div id="edit-entry-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Edit Time Entry</h2>
+            <button type="button" id="close-edit-entry-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="edit-entry-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="edit-entry-date">Date</label>
+              <input id="edit-entry-date" name="date" type="date" required />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="edit-entry-start">Start Time</label>
+                <input id="edit-entry-start" name="startTime" type="text" autocomplete="off" />
+              </div>
+              <div class="form-field">
+                <label for="edit-entry-end">End Time</label>
+                <input id="edit-entry-end" name="endTime" type="text" autocomplete="off" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="edit-entry-hours">Duration</label>
+              <div class="duration-display" id="edit-entry-hours">—</div>
+            </div>
+            <div class="form-field">
+              <label>Billable Status</label>
+              <div class="form-radio-group">
+                <div class="form-radio">
+                  <input id="edit-billableYes" type="radio" name="billable" value="yes" required />
+                  <label for="edit-billableYes">Billable</label>
+                </div>
+                <div class="form-radio">
+                  <input id="edit-billableNo" type="radio" name="billable" value="no" required />
+                  <label for="edit-billableNo">Non-billable</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="edit-entry-note-visibility">Note Type</label>
+              <select id="edit-entry-note-visibility" name="noteVisibility">
+                <option value="internal">Internal Note</option>
+                <option value="customer">Customer Note</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="edit-entry-notes">Notes</label>
+              <textarea id="edit-entry-notes" name="notes" rows="4" placeholder="What did you work on?"></textarea>
+            </div>
+            <div id="edit-entry-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- View Time Entry Modal (Read-Only) -->
+      <div id="view-entry-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Time Entry</h2>
+            <button type="button" id="close-view-entry-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <div class="auth-form">
+            <div class="form-field">
+              <label>Date</label>
+              <div class="form-value" id="view-entry-date"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Start Time</label>
+                <div class="form-value" id="view-entry-start"></div>
+              </div>
+              <div class="form-field">
+                <label>End Time</label>
+                <div class="form-value" id="view-entry-end"></div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Duration</label>
+              <div class="form-value" id="view-entry-hours"></div>
+            </div>
+            <div class="form-field">
+              <label>User</label>
+              <div class="form-value" id="view-entry-user"></div>
+            </div>
+            <div class="form-field">
+              <label>Billable Status</label>
+              <div class="form-value" id="view-entry-billable"></div>
+            </div>
+            <div class="form-field">
+              <label>Notes</label>
+              <div class="form-value" id="view-entry-notes"></div>
+            </div>
+            <button type="button" id="view-entry-edit-button" class="button primary form-submit">Edit Entry</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticket History Modal -->
+      <div id="ticket-history-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content ticket-history-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Ticket Activity History</h2>
+            <button type="button" id="close-ticket-history-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <div class="auth-form">
+            <div class="detail-tabs-header ticket-history-tabs" aria-label="Ticket history filters">
+              <button type="button" class="detail-tab-button active" data-history-filter="all">All</button>
+              <button type="button" class="detail-tab-button" data-history-filter="system">System</button>
+              <button type="button" class="detail-tab-button" data-history-filter="customer">Customer Notes</button>
+              <button type="button" class="detail-tab-button" data-history-filter="internal">Internal Notes</button>
+            </div>
+            <div id="ticket-history-list" class="ticket-activity-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="attachment-delete-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Delete Attachment</h2>
+            <button type="button" id="close-attachment-delete-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <div class="auth-form">
+            <p class="modal-confirm-text">Are you sure you want to delete <strong id="attachment-delete-file-name"></strong>?</p>
+            <div id="attachment-delete-error" class="form-error"></div>
+            <div class="user-form-actions">
+              <button type="button" id="attachment-delete-confirm" class="button danger">Delete</button>
+              <button type="button" id="attachment-delete-cancel" class="button secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Ticket Modal -->
+      <div id="edit-ticket-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Edit Ticket</h2>
+            <button type="button" id="close-edit-ticket-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="edit-ticket-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="edit-ticket-title">Title</label>
+              <input id="edit-ticket-title" name="title" type="text" required />
+            </div>
+            <div class="form-field">
+              <label for="edit-ticket-description">Description</label>
+              <textarea id="edit-ticket-description" name="description" rows="6" placeholder="Describe the ticket..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="edit-ticket-status">Status</label>
+                <select id="edit-ticket-status" name="status" required>
+                  <option value="Open">Open</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="edit-ticket-priority">Priority</label>
+                <select id="edit-ticket-priority" name="priority" required>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="edit-ticket-customer">Customer</label>
+              <input id="edit-ticket-customer" name="customer" type="text" required />
+            </div>
+            <div class="form-field">
+              <label for="edit-ticket-assigned">Assigned To</label>
+              <select id="edit-ticket-assigned" name="assignedTo">
+                <option value="">— Unassigned —</option>
+              </select>
+            </div>
+            <div id="edit-ticket-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="ticket-detail.js"></script>
+</body>
+</html>

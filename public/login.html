@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell auth-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav"></nav>
+    </header>
+
+    <main>
+      <section class="auth-card">
+        <!-- <span class="eyebrow">Sign in securely</span> -->
+        <h1>Access your PSA dashboard</h1>
+        <!--<p>Enter your credentials to manage tickets, customers, and service requests.</p> -->
+
+        <form id="login-form" class="auth-form" novalidate>
+          <div class="form-field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" required autocomplete="username" autofocus />
+          </div>
+
+          <div class="form-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required autocomplete="current-password" />
+          </div>
+
+          <div id="form-error" class="form-error" aria-live="polite"></div>
+
+          <button type="submit" class="button primary">Sign in</button>
+        </form>
+
+        <div id="mfa-modal" class="user-form-modal" hidden>
+          <div class="user-form-modal-content">
+            <div class="user-form-modal-header">
+              <h2>Verify MFA</h2>
+              <button type="button" id="close-mfa-modal" class="close-button" aria-label="Close">×</button>
+            </div>
+            <form id="mfa-form" class="auth-form" novalidate>
+              <div class="form-field">
+                <label for="mfa-code">Authenticator Code</label>
+                <input id="mfa-code" name="mfaCode" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required />
+              </div>
+
+              <div id="mfa-error" class="form-error" aria-live="polite"></div>
+
+              <button type="submit" class="button primary">Verify and Sign in</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="login.js"></script>
+</body>
+</html>

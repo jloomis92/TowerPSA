@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+            <a href="companies.html" class="dropdown-item">Companies</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-copy">
+        <span class="eyebrow">Manage Profile</span>
+        <!--<p>View and manage your account information</p> -->
+      </section>
+
+      <section class="page-content">
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <span class="avatar-initials" id="avatar-initials">?</span>
+            </div>
+            <div class="profile-header-info">
+              <h2 id="profile-name"></h2>
+              <p class="profile-role" id="profile-role-display"></p>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h3>Contact Information</h3>
+            <div class="profile-fields">
+              <div class="profile-field">
+                <label>Email Address</label>
+                <p id="profile-email"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h3>Account Settings</h3>
+            <div class="profile-fields">
+              <div class="profile-field">
+                <label>Role</label>
+                <p id="profile-role"></p>
+              </div>
+              <div class="profile-field">
+                <label>Account Status</label>
+                <p id="profile-status"><span class="status-badge active">Active</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button type="button" id="change-password-button" class="button secondary">Change Password</button>
+            <button type="button" id="setup-mfa-button" class="button secondary">Set Up MFA</button>
+          </div>
+
+          <div class="profile-section">
+            <h3>Multi-Factor Authentication</h3>
+            <div class="profile-fields">
+              <div class="profile-field">
+                <label>Status</label>
+                <p id="mfa-status">Checking...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div id="change-password-modal" class="user-form-modal" hidden>
+          <div class="user-form-modal-content">
+            <div class="user-form-modal-header">
+              <h2>Change Password</h2>
+              <button type="button" id="close-password-modal" class="close-button" aria-label="Close">×</button>
+            </div>
+            <form id="change-password-form" class="auth-form" novalidate>
+              <div class="form-field">
+                <label for="current-password">Current Password</label>
+                <input id="current-password" name="currentPassword" type="password" required />
+              </div>
+              <div class="form-field">
+                <label for="new-password">New Password</label>
+                <input id="new-password" name="newPassword" type="password" required />
+              </div>
+              <div class="form-field">
+                <label for="confirm-password">Confirm Password</label>
+                <input id="confirm-password" name="confirmPassword" type="password" required />
+              </div>
+              <div id="password-form-error" class="form-error"></div>
+              <button type="submit" class="button primary form-submit">Update Password</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- MFA Setup Modal -->
+        <div id="mfa-setup-modal" class="user-form-modal" hidden>
+          <div class="user-form-modal-content">
+            <div class="user-form-modal-header">
+              <h2>Set Up MFA</h2>
+              <button type="button" id="close-mfa-modal" class="close-button" aria-label="Close">×</button>
+            </div>
+            <form id="mfa-setup-form" class="auth-form" novalidate>
+              <div class="form-field">
+                <label>Scan QR Code</label>
+                <img id="mfa-qr-code" class="mfa-qr-image" alt="MFA QR code" />
+              </div>
+              <div class="form-field">
+                <label>Authenticator Secret</label>
+                <input id="mfa-secret" type="text" readonly />
+              </div>
+              <p class="helper-text">Scan the QR code in your authenticator app. If needed, manually enter the secret key above, then enter the 6-digit code below.</p>
+              <div class="form-field">
+                <label for="mfa-code">Verification Code</label>
+                <input id="mfa-code" name="code" type="text" inputmode="numeric" maxlength="6" placeholder="123456" required />
+              </div>
+              <div id="mfa-form-error" class="form-error"></div>
+              <button type="submit" class="button primary form-submit">Enable MFA</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="profile.js"></script>
+</body>
+</html>

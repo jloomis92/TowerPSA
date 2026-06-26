@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Companies · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <a href="calendar.html" class="button primary">Calendar</a>
+        <a href="companies.html" class="button primary">Companies</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-copy">
+        <span class="eyebrow">Companies</span>
+        <button type="button" id="add-company-button" class="button primary">+ Add Company</button>
+      </section>
+
+      <section class="ticket-list-shell">
+        <div class="list-search-bar">
+          <input id="company-search" type="text" placeholder="Search companies..." />
+        </div>
+        <div id="page-error" class="form-error"></div>
+        <table class="ticket-table" aria-label="Company list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Primary Contact</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody id="company-table-body">
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Add / Edit Company Modal -->
+      <div id="company-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2 id="company-modal-title">Add Company</h2>
+            <button type="button" id="close-company-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="company-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="company-name">Company Name</label>
+              <input id="company-name" name="name" type="text" required />
+            </div>
+            <div class="form-field">
+              <label for="company-contact">Primary Contact</label>
+              <input id="company-contact" name="primaryContact" type="text" placeholder="Decision maker's name" />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="company-phone">Phone</label>
+                <input id="company-phone" name="phone" type="tel" />
+              </div>
+              <div class="form-field">
+                <label for="company-email">Email</label>
+                <input id="company-email" name="email" type="email" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="company-address">Address</label>
+              <input id="company-address" name="address" type="text" />
+            </div>
+            <div class="form-field">
+              <label for="company-notes">Notes</label>
+              <textarea id="company-notes" name="notes" rows="3"></textarea>
+            </div>
+            <div id="company-form-error" class="form-error"></div>
+            <button type="submit" id="company-form-submit" class="button primary form-submit">Add Company</button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="companies.js"></script>
+</body>
+</html>

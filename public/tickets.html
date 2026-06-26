@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tickets · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <a href="calendar.html" class="button primary">Calendar</a>
+        <a href="companies.html" class="button primary">Companies</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-copy">
+        <span class="eyebrow">Service Tickets</span>
+      </section>
+
+      <div class="ticket-list-header">
+        <button type="button" id="new-ticket-button" class="button primary">+ New Ticket</button>
+        <button type="button" id="customize-columns-button" class="button secondary">Customize Columns</button>
+      </div>
+
+      <section class="ticket-list-shell">
+        <div id="page-error" class="form-error"></div>
+        <table class="ticket-table" aria-label="Ticket list">
+          <thead>
+            <tr id="ticket-header-row"></tr>
+          </thead>
+          <tbody id="ticket-body">
+          </tbody>
+        </table>
+      </section>
+
+      <div id="column-order-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content column-order-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Customize Columns</h2>
+            <button type="button" id="close-column-order-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <div class="auth-form">
+            <p class="column-order-help">Move columns up or down to change how tickets are displayed.</p>
+            <div id="column-order-list" class="column-order-list"></div>
+            <div class="user-form-actions">
+              <button type="button" id="reset-column-order" class="button secondary">Reset Default</button>
+              <button type="button" id="done-column-order" class="button primary">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Ticket Modal -->
+      <div id="new-ticket-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Create New Ticket</h2>
+            <button type="button" id="close-new-ticket-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="new-ticket-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="new-ticket-title">Title</label>
+              <input id="new-ticket-title" name="title" type="text" required />
+            </div>
+            <div class="form-field">
+              <label for="new-ticket-description">Description</label>
+              <textarea id="new-ticket-description" name="description" rows="6" placeholder="Describe the ticket..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="new-ticket-status">Status</label>
+                <select id="new-ticket-status" name="status" required>
+                  <option value="Open" selected>Open</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="new-ticket-priority">Priority</label>
+                <select id="new-ticket-priority" name="priority" required>
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="new-ticket-customer">Customer</label>
+              <div id="new-ticket-customer-dropdown" class="custom-dropdown">
+                <div class="dropdown-trigger">
+                  <span id="new-ticket-customer-display">— Select Company —</span>
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-menu" hidden>
+                  <input id="new-ticket-customer-search" type="text" placeholder="Search companies..." class="dropdown-search" />
+                  <select id="new-ticket-customer" name="customer" hidden required>
+                    <option value="">— Select Company —</option>
+                  </select>
+                  <div id="new-ticket-customer-options" class="dropdown-options"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="new-ticket-contact">Contact</label>
+              <div id="new-ticket-contact-dropdown" class="custom-dropdown">
+                <div class="dropdown-trigger">
+                  <span id="new-ticket-contact-display">— Select Contact —</span>
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-menu" hidden>
+                  <input id="new-ticket-contact-search" type="text" placeholder="Search contacts..." class="dropdown-search" />
+                  <select id="new-ticket-contact" name="customerContact" hidden>
+                    <option value="">— Select Contact —</option>
+                  </select>
+                  <div id="new-ticket-contact-options" class="dropdown-options"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="new-ticket-assigned">Assigned To</label>
+              <select id="new-ticket-assigned" name="assignedTo">
+                <option value="">— Unassigned —</option>
+              </select>
+            </div>
+            <div id="new-ticket-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Create Ticket</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="tickets.js"></script>
+</body>
+</html>

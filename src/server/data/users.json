@@ -1,0 +1,23 @@
+[
+  {
+    "id": "user-1",
+    "name": "Tower Admin",
+    "email": "admin@example.com",
+    "role": "admin",
+    "passwordHash": "$2b$10$CEY8b9XfToZSTEd47qvoKeiepO4NgjokbQocTrhpKyWgdLkgMlruS"
+  },
+  {
+    "id": "3ed7c3bf-a4ae-4d07-b9c4-4991cb23a8d6",
+    "name": "John Smith",
+    "email": "john@example.com",
+    "role": "user",
+    "passwordHash": "$2b$10$OwTU9Sl1eozUIF76sqdUv.64WkwqSPXj.IF86pWdcY6g4Oczm6fe."
+  },
+  {
+    "id": "826fae47-2f84-460c-93de-442f1f767905",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "role": "admin",
+    "passwordHash": "$2b$10$2aEH9ZOXFZP/qDRbyqZiv.5iLwUGSSgbSlGjkDtfA5Ue5r/BVOzEG"
+  }
+]

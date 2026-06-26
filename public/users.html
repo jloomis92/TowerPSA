@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+            <a href="companies.html" class="dropdown-item">Companies</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-copy">
+        <span class="eyebrow">User management</span>
+        <!--<h1>Manage Users</h1> -->
+        <!--<p>Create, update, and remove users without hard-coding credentials in the application.</p> -->
+      </section>
+
+      <section class="user-management-shell">
+        <div class="user-list-header">
+          <button type="button" id="add-user-button" class="button primary">Add User</button>
+        </div>
+
+        <div id="user-form-modal" class="user-form-modal" hidden>
+          <div class="user-form-modal-content">
+            <div class="user-form-modal-header">
+              <h2 id="form-modal-title">New User</h2>
+              <button type="button" id="close-form-modal" class="close-button" aria-label="Close">×</button>
+            </div>
+            <form id="user-form" class="auth-form" novalidate>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="firstName">First name</label>
+                  <input id="firstName" name="firstName" type="text" required />
+                </div>
+                <div class="form-field">
+                  <label for="lastName">Last name</label>
+                  <input id="lastName" name="lastName" type="text" required />
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div class="form-field">
+                <label>Role</label>
+                <div class="form-radio-group">
+                  <div class="form-radio">
+                    <input id="roleAdmin" type="radio" name="role" value="admin" required checked />
+                    <label for="roleAdmin">Admin</label>
+                  </div>
+                  <div class="form-radio">
+                    <input id="roleUser" type="radio" name="role" value="user" required />
+                    <label for="roleUser">User</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" />
+                <small id="password-hint" hidden>Leave blank when editing to keep the current password.</small>
+              </div>
+              <div id="user-form-error" class="form-error" aria-live="polite"></div>
+              <div class="user-form-actions">
+                <button type="submit" class="button primary">Add User</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <table class="user-table" aria-label="User list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>MFA Enabled</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="user-table-body">
+          </tbody>
+        </table>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="delete-confirm-modal" class="user-form-modal" hidden>
+          <div class="confirm-modal-content">
+            <h2>Delete User</h2>
+            <p>Are you sure you want to delete this user? This action cannot be undone.</p>
+            <div class="confirm-modal-actions">
+              <button type="button" id="confirm-delete-cancel" class="button secondary">Cancel</button>
+              <button type="button" id="confirm-delete-ok" class="button danger">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reset MFA Confirmation Modal -->
+        <div id="reset-mfa-confirm-modal" class="user-form-modal" hidden>
+          <div class="confirm-modal-content">
+            <h2>Reset MFA</h2>
+            <p id="reset-mfa-confirm-message">Are you sure you want to reset MFA for this user? They will need to set up MFA again.</p>
+            <div class="confirm-modal-actions">
+              <button type="button" id="confirm-reset-mfa-cancel" class="button secondary">Cancel</button>
+              <button type="button" id="confirm-reset-mfa-ok" class="button danger">Reset MFA</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="users.js"></script>
+</body>
+</html>

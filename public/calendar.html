@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <a href="calendar.html" class="button primary">Calendar</a>
+        <a href="companies.html" class="button primary">Companies</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="calendar-shell">
+        <!-- Calendar Header -->
+        <div class="calendar-header">
+          <div class="calendar-header-nav">
+            <button type="button" id="calendar-prev-week" class="button secondary">← Previous</button>
+            <button type="button" id="calendar-today" class="button secondary">Today</button>
+            <button type="button" id="calendar-next-week" class="button secondary">Next →</button>
+            <button type="button" id="calendar-refresh" class="button secondary">↻ Refresh</button>
+          </div>
+          <div class="calendar-header-title">
+            <h1 id="calendar-week-range"></h1>
+          </div>
+          <div class="calendar-header-meta">
+            <div class="calendar-user">Viewing: <strong id="calendar-user-name"></strong></div>
+          </div>
+        </div>
+
+        <!-- Capacity Bar -->
+        <div class="calendar-capacity">
+          <div class="capacity-label">
+            <span>Weekly Hours:</span>
+            <strong id="calendar-total-hours">0h</strong>
+            <span class="capacity-percentage" id="calendar-capacity-percent"></span>
+          </div>
+          <div class="capacity-bar">
+            <div class="capacity-fill" id="calendar-capacity-fill"></div>
+          </div>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="calendar-grid">
+          <!-- Day Headers -->
+          <div class="calendar-day-headers">
+            <div class="calendar-time-column"></div>
+            <div class="calendar-day-header" id="day-0"></div>
+            <div class="calendar-day-header" id="day-1"></div>
+            <div class="calendar-day-header" id="day-2"></div>
+            <div class="calendar-day-header" id="day-3"></div>
+            <div class="calendar-day-header" id="day-4"></div>
+            <div class="calendar-day-header" id="day-5"></div>
+            <div class="calendar-day-header" id="day-6"></div>
+          </div>
+
+          <!-- Time Slots -->
+          <div class="calendar-time-slots">
+            <div class="calendar-time-column" id="calendar-time-column"></div>
+            <div class="calendar-day-column" id="day-col-0"></div>
+            <div class="calendar-day-column" id="day-col-1"></div>
+            <div class="calendar-day-column" id="day-col-2"></div>
+            <div class="calendar-day-column" id="day-col-3"></div>
+            <div class="calendar-day-column" id="day-col-4"></div>
+            <div class="calendar-day-column" id="day-col-5"></div>
+            <div class="calendar-day-column" id="day-col-6"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="calendar-load-error" class="form-error" hidden></div>
+    </main>
+  </div>
+
+  <script src="calendar.js"></script>
+</body>
+</html>

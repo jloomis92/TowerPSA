@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLA Rules · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <a href="calendar.html" class="button primary">Calendar</a>
+        <a href="companies.html" class="button primary">Companies</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-copy">
+        <span class="eyebrow">SLA Rules</span>
+        <button type="button" id="add-sla-rule-button" class="button primary">+ Add SLA Rule</button>
+      </section>
+
+      <section class="ticket-list-shell">
+        <div id="page-error" class="form-error"></div>
+        <table class="ticket-table" aria-label="SLA Rules list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Response</th>
+              <th>Resolution</th>
+              <th>Default</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="sla-rule-table-body"></tbody>
+        </table>
+      </section>
+
+      <div id="sla-rule-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2 id="sla-rule-modal-title">Add SLA Rule</h2>
+            <button type="button" id="close-sla-rule-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="sla-rule-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="sla-rule-name">Rule Name</label>
+              <input id="sla-rule-name" name="name" type="text" required />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="sla-rule-response">Response Minutes</label>
+                <input id="sla-rule-response" name="responseMinutes" type="number" min="1" step="1" required />
+              </div>
+              <div class="form-field">
+                <label for="sla-rule-resolution">Resolution Minutes</label>
+                <input id="sla-rule-resolution" name="resolutionMinutes" type="number" min="1" step="1" required />
+              </div>
+            </div>
+            <p id="sla-rule-default-hint" class="company-sla-hint" hidden></p>
+            <div id="sla-rule-form-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Save Rule</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="sla-rules.js"></script>
+</body>
+</html>

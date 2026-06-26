@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company · TowerPSA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="tickets.html" class="brand">TowerPSA</a>
+      <nav class="site-nav">
+        <a href="tickets.html" class="button primary">Dashboard</a>
+        <a href="calendar.html" class="button primary">Calendar</a>
+        <a href="companies.html" class="button primary">Companies</a>
+        <div class="manage-menu" hidden>
+          <button type="button" id="manage-button" class="button primary" aria-haspopup="true" aria-expanded="false">Admin</button>
+          <div id="manage-dropdown" class="dropdown-menu" hidden>
+            <a href="users.html" class="dropdown-item">Users</a>
+            <a href="sla-rules.html" class="dropdown-item">SLA Rules</a>
+          </div>
+        </div>
+        <div class="profile-menu" hidden>
+          <button type="button" id="profile-button" class="button profile-button" aria-haspopup="true" aria-expanded="false">
+            <span class="profile-icon" id="profile-initials" aria-hidden="true">?</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown-menu" hidden>
+            <div class="dropdown-user-name" id="profile-fullname"></div>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="view-profile-button" class="dropdown-item">View Profile</button>
+            <div class="dropdown-divider" aria-hidden="true"></div>
+            <button type="button" id="logout-button" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="ticket-detail-back">
+        <a href="companies.html" class="back-link">← Back to Companies</a>
+      </div>
+
+      <div id="company-detail-shell" hidden>
+
+        <!-- Company Header -->
+        <div class="ticket-detail-header">
+          <div class="ticket-detail-title-row">
+            <h1 class="ticket-detail-title" id="detail-name"></h1>
+            <button type="button" id="edit-company-button" class="button-icon" aria-label="Edit company">✎</button>
+          </div>
+        </div>
+
+        <!-- Two-column layout -->
+        <div class="ticket-detail-layout">
+
+          <!-- Left: tabbed section -->
+          <div class="ticket-detail-main">
+            <!-- Tab buttons -->
+            <div class="detail-tabs-header">
+              <button type="button" class="detail-tab-button active" data-tab="contacts">Contacts</button>
+              <button type="button" class="detail-tab-button" data-tab="tickets">Tickets</button>
+              <button type="button" class="detail-tab-button" data-tab="notes">Notes</button>
+            </div>
+
+            <!-- Contacts tab -->
+            <div id="contacts-tab" class="detail-tab-content active">
+              <div class="ticket-detail-card">
+                <div class="card-header-with-action">
+                  <h2>Contacts</h2>
+                  <button type="button" id="add-contact-button" class="button secondary small">+ Add Contact</button>
+                </div>
+                <div id="contacts-list" class="contacts-list">
+                  <!-- Contacts will be populated here -->
+                </div>
+              </div>
+            </div>
+
+            <div id="tickets-tab" class="detail-tab-content">
+              <div class="ticket-detail-card">
+                <h2>Tickets</h2>
+                <div class="ticket-list-shell">
+                  <table class="ticket-table" aria-label="Company tickets">
+                    <thead>
+                      <tr>
+                        <th>Ticket</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Assigned To</th>
+                        <th>Updated</th>
+                      </tr>
+                    </thead>
+                    <tbody id="company-tickets-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notes tab -->
+            <div id="notes-tab" class="detail-tab-content">
+              <div class="ticket-detail-card">
+                <h2>Notes</h2>
+                <p id="detail-notes" class="ticket-description"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: sidebar -->
+          <aside class="ticket-detail-sidebar">
+            <div class="ticket-detail-card">
+              <h2>Details</h2>
+              <dl class="ticket-meta-list">
+                <div class="ticket-meta-item">
+                  <dt>Primary Contact</dt>
+                  <dd id="detail-primary-contact"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Phone</dt>
+                  <dd id="detail-phone"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Email</dt>
+                  <dd id="detail-email"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Address</dt>
+                  <dd id="detail-address"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>SLA Rule</dt>
+                  <dd id="detail-sla-policy"></dd>
+                </div>
+                <div class="ticket-meta-item">
+                  <dt>Added</dt>
+                  <dd id="detail-created"></dd>
+                </div>
+              </dl>
+            </div>
+            <!-- Admin actions -->
+            <div id="admin-actions" hidden>
+              <div class="ticket-detail-card company-sla-admin-card">
+                <h2>SLA Management</h2>
+                <div class="form-field">
+                  <label for="company-sla-policy-select">Apply SLA Rule to Company</label>
+                  <select id="company-sla-policy-select"></select>
+                  <p id="company-sla-hint" class="company-sla-hint"></p>
+                </div>
+                <div id="company-sla-error" class="form-error"></div>
+                <div class="user-form-actions">
+                  <button type="button" id="save-company-sla-button" class="button primary">Save SLA Assignment</button>
+                  <a href="sla-rules.html" class="button secondary">Manage Rules</a>
+                </div>
+              </div>
+              <button type="button" id="delete-company-button" class="button danger">Delete Company</button>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+
+      <div id="company-load-error" class="form-error" hidden></div>
+
+      <!-- Delete Confirm Modal -->
+      <div id="delete-confirm-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Delete Company</h2>
+            <button type="button" id="close-delete-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <p class="modal-confirm-text">Are you sure you want to delete this company? This cannot be undone.</p>
+          <div class="user-form-actions">
+            <button type="button" id="confirm-delete-ok" class="button danger">Delete</button>
+            <button type="button" id="confirm-delete-cancel" class="button secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Company Modal -->
+      <div id="edit-company-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2>Edit Company</h2>
+            <button type="button" id="close-edit-company-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="edit-company-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label for="edit-company-name">Company Name</label>
+              <input id="edit-company-name" name="name" type="text" required />
+            </div>
+            <div class="form-field">
+              <label for="edit-company-contact">Primary Contact</label>
+              <input id="edit-company-contact" name="primaryContact" type="text" placeholder="Decision maker's name" />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="edit-company-phone">Phone</label>
+                <input id="edit-company-phone" name="phone" type="tel" />
+              </div>
+              <div class="form-field">
+                <label for="edit-company-email">Email</label>
+                <input id="edit-company-email" name="email" type="email" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="edit-company-address">Address</label>
+              <input id="edit-company-address" name="address" type="text" />
+            </div>
+            <div class="form-field">
+              <label for="edit-company-notes">Notes</label>
+              <textarea id="edit-company-notes" name="notes" rows="3"></textarea>
+            </div>
+            <div id="edit-company-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Add / Edit Contact Modal -->
+      <div id="contact-modal" class="user-form-modal" hidden>
+        <div class="user-form-modal-content">
+          <div class="user-form-modal-header">
+            <h2 id="contact-modal-title">Add Contact</h2>
+            <button type="button" id="close-contact-modal" class="close-button" aria-label="Close">×</button>
+          </div>
+          <form id="contact-form" class="auth-form" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="contact-first-name">First Name</label>
+                <input id="contact-first-name" name="firstName" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="contact-last-name">Last Name</label>
+                <input id="contact-last-name" name="lastName" type="text" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="contact-phone">Phone</label>
+              <input id="contact-phone" name="phone" type="tel" />
+            </div>
+            <div class="form-field">
+              <label for="contact-email">Email</label>
+              <input id="contact-email" name="email" type="email" />
+            </div>
+            <div class="form-field">
+              <label for="contact-job-title">Job Title</label>
+              <input id="contact-job-title" name="jobTitle" type="text" />
+            </div>
+            <div class="form-field">
+              <label>
+                <input id="contact-is-primary" name="isPrimary" type="checkbox" />
+                Mark as Primary Contact
+              </label>
+            </div>
+            <div id="contact-error" class="form-error"></div>
+            <button type="submit" class="button primary form-submit">Save Contact</button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="company-detail.js"></script>
+</body>
+</html>
