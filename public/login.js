@@ -66,6 +66,10 @@ const submitLogin = async ({ email, password, mfaCode }) => {
 const loginReason = new URLSearchParams(window.location.search).get('reason');
 if (loginReason === 'idle') {
   setError('Your session expired due to inactivity. Please sign in again.');
+} else if (loginReason === 'expired') {
+  setError('Your session expired. Please sign in again.');
+} else if (loginReason === 'unauthorized') {
+  setError('Please sign in to continue.');
 }
 
 if (storedToken) {
